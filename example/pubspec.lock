@@ -184,5 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4-beta"
+  z_grouped_list:
+    dependency: "direct main"
+    description:
+      name: z_grouped_list
+      sha256: ecf787bfefee43b81e072b4bda7779700a277c198b3cb2656c8d42b0fc78fec4
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
 sdks:
   dart: ">=3.1.5 <4.0.0"
+  flutter: ">=1.17.0"

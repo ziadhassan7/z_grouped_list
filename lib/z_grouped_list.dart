@@ -3,10 +3,10 @@ library z_grouped_list;
 import 'package:flutter/material.dart';
 
 //ignore: must_be_immutable
-class ZiGroupedList<T, E> extends StatelessWidget {
+class ZGroupedList<T, E> extends StatelessWidget {
 
   ///Normal List View
-  ZiGroupedList(
+  ZGroupedList(
       {Key? key,
         required this.shrinkWrap,
         required this.items,
@@ -17,7 +17,7 @@ class ZiGroupedList<T, E> extends StatelessWidget {
       : super(key: key);
 
   /// Grid List
-  ZiGroupedList.grid(
+  ZGroupedList.grid(
       {Key? key,
         required this.shrinkWrap,
         required this.items,
