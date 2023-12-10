@@ -1,8 +1,7 @@
 name: z_grouped_list
 description: A custom list that separates data into groups with specific index.
-author: Ziad Hassan
 version: 1.0.0
-homepage:
+homepage: https://github.com/ziadhassan7/z_grouped_list
 
 environment:
   sdk: '>=3.1.5 <4.0.0'
