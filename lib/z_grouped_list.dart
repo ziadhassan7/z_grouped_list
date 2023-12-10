@@ -5,21 +5,43 @@ import 'package:flutter/material.dart';
 //ignore: must_be_immutable
 class ZGroupedList<T, E> extends StatelessWidget {
 
+  /// your data list
+  final List<T> items;
+  /// pass in the item you need to sort by
+  /// example: fetch the year integer of your data , and return this integer
+  final E Function(T) sortBy;
+  /// item widget
+  final Widget Function(BuildContext, T) itemBuilder;
+  /// group separator widget
+  final Widget Function(E) groupSeparatorBuilder;
+  /// how much items horizontally in a grid
+  int? crossAxisCount;
+  /// pass in a custom gridDelegate
+  SliverGridDelegate? gridDelegate;
+  /// is your data organized in a descending order
+  /// true by default
+  bool descendingOrder;
+
+  late bool _isGrid;
+  static final List _sortHeaders = [];
+
+
   ///Normal List View
   ZGroupedList(
       {Key? key,
-        required this.shrinkWrap,
         required this.items,
         required this.sortBy,
         required this.itemBuilder,
         required this.groupSeparatorBuilder,
         this.descendingOrder = true})
-      : super(key: key);
+      : super(key: key) {
+
+    _isGrid = false;
+  }
 
   /// Grid List
   ZGroupedList.grid(
       {Key? key,
-        required this.shrinkWrap,
         required this.items,
         required this.sortBy,
         required this.itemBuilder,
@@ -30,19 +52,9 @@ class ZGroupedList<T, E> extends StatelessWidget {
       })
       : super(key: key) {
 
+    _isGrid = true;
     assert(crossAxisCount != null || gridDelegate != null);
   }
-
-  final bool shrinkWrap;
-  final List<T> items;
-  final E Function(T) sortBy;
-  final Widget Function(BuildContext, T) itemBuilder;
-  final Widget Function(E) groupSeparatorBuilder;
-  int? crossAxisCount;
-  SliverGridDelegate? gridDelegate;
-  bool descendingOrder;
-
-  static final List _sortHeaders = [];
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +67,49 @@ class ZGroupedList<T, E> extends StatelessWidget {
 
   /// Main Widget - (Header & Group)
   Widget groupWidget(BuildContext context){
-    return Column(
-      children: [
+    return SingleChildScrollView(
+      child: Column(
+        children: [
 
-        for(var header in _sortHeaders)
-          Column(
-            children: [
-              //header
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: groupSeparatorBuilder(header),
-              ),
-              //group
-              sliverList(getGroupByHeader(header)),
-            ],
-          ),
+          for(var header in _sortHeaders)
+            Column(
+              children: [
+                //header
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: groupSeparatorBuilder(header),
+                ),
+                //group
+                _isGrid
+                    ? sliverList(getGroupByHeader(header))
+                    : normalList(getGroupByHeader(header)),
+              ],
+            ),
 
-      ],
+        ],
+      ),
     );
 
   }
 
+
+  // Your Group Widget
+  Widget normalList(List currentGroup){
+    return Padding(
+        padding: const EdgeInsets.only(top: 30),
+
+        child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            // use count of group items
+            itemCount: currentGroup.length,
+            itemBuilder: (context, index) {
+              return itemBuilder(context, currentGroup[index]);
+            }
+        )
+
+    );
+  }
 
   // Your Group Widget
   Widget sliverList(List currentGroup){

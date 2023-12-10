@@ -30,11 +30,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final List<Map<String, dynamic>> books =[
     {"name": "Atomic Habits" , "year": 2018},
-    {"name": "The Subtle art" , "year": 2018},
-    {"name": "Jurassic Park" , "year": 1990},
+    {"name": "The Miracle Morning" , "year": 2018},
+    {"name": "Jurassic Park" , "year": 2019},
   ];
 
 
@@ -51,28 +50,25 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
 
-        ZGroupedList.grid(
-        shrinkWrap: true,
-        crossAxisCount: 3,
-        items: books,
-        sortBy: (item){
-          int year = item['year'];
-          return year;
-        },
-        itemBuilder: (context, item){
-          String? name = item['name'];
-          return Text(name ?? "empty");
-        },
-        groupSeparatorBuilder: (year) {
-          return Text(year.toString(),);
-        },
-
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 80,
-            childAspectRatio: 5 / 9,
-            crossAxisSpacing: 25,
-            mainAxisSpacing: 15),
-        )],
+          Expanded(
+            child: ZGroupedList(
+              // All items list
+              items: books,
+              // What element should you sort by?
+              sortBy: (item){
+                int year = item['year'];
+                return year;
+              },
+              // Item widget
+              itemBuilder: (context, item){
+                String? name = item['name'];
+                return Text(name ?? "empty");
+              },
+              // Group separator widget
+              groupSeparatorBuilder: (year) {
+                return Text(year.toString(),);
+              }, ),
+          )],
       ),
 
     );
