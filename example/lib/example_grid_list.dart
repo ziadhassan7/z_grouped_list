@@ -22,16 +22,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key,});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  final List<Map<String, dynamic>> books =[
+  static const List<Map<String, dynamic>> _books =[
     {"name": "Atomic Habits" , "year": 2018},
     {"name": "The Miracle Morning" , "year": 2018},
     {"name": "Jurassic Park" , "year": 1990},
@@ -57,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisCount: 3,
 
               // All items list
-              items: books,
+              items: _books,
               // What element should you sort by?
               sortBy: (item){
                 int year = item['year'];
