@@ -7,18 +7,19 @@ class ZGroupedList<T, E> extends StatelessWidget {
 
   /// your data list
   final List<T> items;
-  /// pass in the item you need to sort by
+  /// The item you need to sort by
+  /// A Function which maps an element to its grouped value
   /// example: fetch the year integer of your data , and return this integer
   final E Function(T) sortBy;
   /// item widget
   final Widget Function(BuildContext, T) itemBuilder;
   /// group separator widget
   final Widget Function(E) groupSeparatorBuilder;
-  /// how much items horizontally in a grid
+  /// how many items horizontally in a grid
   int? crossAxisCount;
   /// pass in a custom gridDelegate
   SliverGridDelegate? gridDelegate;
-  /// is your data organized in a descending order
+  /// Should organize in a descending order?
   /// true by default
   bool descendingOrder;
 
