@@ -8,7 +8,7 @@ Supports ListViews and GridViews
 Important!!!
 do not forget to wrap your code with an `Expanded` or a `SizedBox`.
 
-Simple List implementation:
+**Simple List implementation:**
 ```dart
 ZGroupedList(
               // your items list
@@ -29,7 +29,7 @@ ZGroupedList(
               }, ),
 ```
 
-Grid List implementation:
+**Grid List implementation:**
 ```dart
 ZGroupedList.grid(
               // Show 3 items horizontally
@@ -64,7 +64,7 @@ ZGroupedList.grid(
 
 
 ### Parameters
-Normal List:
+**Normal List:**
 
 | Name                  | Description                                             | Required | Default value |
 | :-------------------- |:-------------------------------------------------------:| --------:| -------------:|
@@ -74,7 +74,7 @@ Normal List:
 | groupSeparatorBuilder | Function that let you build the group separator widget  | required | -             |
 | descendingOrder       | Is your data organized in a decending order             | no       | true          |
 
-Extra for Grid List:
+**Extra for Grid List:**
 
 | Name                  | Description                                             | Required | Default value |
 | :-------------------- |:-------------------------------------------------------:| --------:| -------------:|
