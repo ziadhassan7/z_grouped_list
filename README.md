@@ -1,9 +1,25 @@
-A custom list that separates your list of data into groups with seperators!
+A custom list that separates your data into groups with headlines!
 
-### Features
-Supports ListViews and GridViews
+![ZGroupedList](https://github.com/ziadhassan7/z_grouped_list/assets/31738365/434a490f-9a7b-4786-a617-4a2848e19737)
 
-## Usage
+## Features
+* Supports ListViews and GridViews
+
+
+# 💾 Installation
+In the `dependencies:` section of your `pubspec.yaml`, add the following line:
+
+```yaml
+dependencies:
+  z_grouped_list: <latest version>
+```
+
+Now in your dart code you can import it
+```dart
+import 'package:z_grouped_list/z_grouped_list.dart';
+```
+
+# 📦 Usage
 
 Important!!!
 do not forget to wrap your code with an `Expanded` or a `SizedBox`.
@@ -63,20 +79,20 @@ ZGroupedList.grid(
 
 
 
-### Parameters
-**Normal List:**
+## 🎯Parameters
+**For Normal List:**
 
 | Name                  | Description                                             | Required | Default value |
-| :-------------------- |:-------------------------------------------------------:| --------:| -------------:|
+| :-------------------- |---------------------------------------------------------| ---------| --------------|
 | items                 | A list of the data you want to display in the list      | required | -             |
 | sortBy                | Function which maps an element to its grouped value     | required | -             |
 | itemBuilder           | Function that let you build the item widget             | required | -             |
 | groupSeparatorBuilder | Function that let you build the group separator widget  | required | -             |
 | descendingOrder       | Is your data organized in a decending order             | no       | true          |
 
-**Extra for Grid List:**
+**Extras for Grid List:**
 
 | Name                  | Description                                             | Required | Default value |
-| :-------------------- |:-------------------------------------------------------:| --------:| -------------:|
+| :-------------------- |---------------------------------------------------------| ---------| --------------|
 | crossAxisCount        | how many items horizontally in a grid                   | no       | 1             |
 | gridDelegate          | pass in a custom gridDelegate                           | no       | -             |
