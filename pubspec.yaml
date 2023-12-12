@@ -1,6 +1,6 @@
 name: z_grouped_list
 description: A custom list that separates data into groups with specific index.
-version: 1.0.7
+version: 1.0.8
 repository: https://github.com/ziadhassan7/z_grouped_list
 
 environment:
