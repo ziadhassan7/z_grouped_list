@@ -13,10 +13,10 @@ class ZGroupedList<T, E> extends StatelessWidget {
   final E Function(T) sortBy;
 
   /// item widget
-  final Widget Function(BuildContext, T) itemBuilder;
+  final Widget Function(BuildContext context, T item) itemBuilder;
 
   /// group separator widget
-  final Widget Function(E) groupSeparatorBuilder;
+  final Widget Function(E sortItem) groupSeparatorBuilder;
 
   /// how many items horizontally in a grid
   int? crossAxisCount;
@@ -28,8 +28,11 @@ class ZGroupedList<T, E> extends StatelessWidget {
   /// true by default
   bool descendingOrder;
 
+  /// Separator space padding
+  EdgeInsets separatorPadding;
+
   late bool _isGrid;
-  static final List _sortHeaders = [];
+  final List _sortHeaders = [];
 
   ///Normal List View
   ZGroupedList(
@@ -38,7 +41,8 @@ class ZGroupedList<T, E> extends StatelessWidget {
       required this.sortBy,
       required this.itemBuilder,
       required this.groupSeparatorBuilder,
-      this.descendingOrder = true})
+      this.descendingOrder = false,
+      this.separatorPadding = const EdgeInsets.symmetric(vertical: 12)})
       : super(key: key) {
     _isGrid = false;
   }
@@ -52,7 +56,8 @@ class ZGroupedList<T, E> extends StatelessWidget {
       required this.groupSeparatorBuilder,
       this.crossAxisCount,
       this.gridDelegate,
-      this.descendingOrder = true})
+      this.descendingOrder = false,
+      this.separatorPadding = const EdgeInsets.symmetric(vertical: 12)})
       : super(key: key) {
     _isGrid = true;
     assert(crossAxisCount != null || gridDelegate != null);
@@ -75,7 +80,7 @@ class ZGroupedList<T, E> extends StatelessWidget {
               children: [
                 //header
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: separatorPadding,
                   child: groupSeparatorBuilder(header),
                 ),
                 //group
@@ -91,44 +96,39 @@ class ZGroupedList<T, E> extends StatelessWidget {
 
   // Your Group Widget
   Widget normalList(List currentGroup) {
-    return Padding(
-        padding: const EdgeInsets.only(top: 30),
-        child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            // use count of group items
-            itemCount: currentGroup.length,
-            itemBuilder: (context, index) {
-              return itemBuilder(context, currentGroup[index]);
-            }));
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        // use count of group items
+        itemCount: currentGroup.length,
+        itemBuilder: (context, index) {
+          return itemBuilder(context, currentGroup[index]);
+        });
   }
 
   // Your Group Widget
   Widget sliverList(List currentGroup) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: CustomScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        slivers: [
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              // use count of group items
-              childCount: currentGroup.length,
-              (context, index) {
-                return itemBuilder(context, currentGroup[index]);
-              },
-            ),
-            gridDelegate: gridDelegate ??
-                SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount ?? 1,
-                  childAspectRatio: 2 / 3.2,
-                  crossAxisSpacing: 25,
-                  mainAxisSpacing: 15,
-                ),
-          )
-        ],
-      ),
+    return CustomScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      slivers: [
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            // use count of group items
+            childCount: currentGroup.length,
+            (context, index) {
+              return itemBuilder(context, currentGroup[index]);
+            },
+          ),
+          gridDelegate: gridDelegate ??
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount ?? 1,
+                childAspectRatio: 2 / 3.2,
+                crossAxisSpacing: 25,
+                mainAxisSpacing: 15,
+              ),
+        )
+      ],
     );
   }
 
@@ -136,6 +136,8 @@ class ZGroupedList<T, E> extends StatelessWidget {
 
   // List of headers
   void _generateHeaderList() {
+    _sortHeaders.clear();
+
     for (var item in items) {
       if (!_sortHeaders.contains(sortBy(item))) {
         _sortHeaders.add(sortBy(item));

@@ -92,7 +92,8 @@ ZGroupedList.grid(
 | sortBy                | Function which maps an element to its grouped value    | required | -             |
 | itemBuilder           | Function that let you build the item widget            | required | -             |
 | groupSeparatorBuilder | Function that let you build the group separator widget | required | -             |
-| descendingOrder       | Is your data organized in a decending order            | no       | true          |
+| descendingOrder       | Is your data organized in a descending order           | no       | true          |
+| separatorPadding      | Add custom padding space for Separator widget          | no       | Vertical: 12  |
 
 **Extras for Grid List:**
 
